@@ -2,51 +2,40 @@
 
 ## [Unreleased]
 
+## [18.8.0] - 2026-10-07
+
 ### Added
 
-- Files the write tool creates now preview the way the matching code blocks in replies do, building up while the write streams: `.svg` as an image and Mermaid (`.mmd`, `.mermaid`) as a diagram under the write card, and in Tern also 3D models (`.obj`, `.ply`, `.wrl`, `.x3dv`, `.stl`, `.gltf`, `.usda`); in Tern an SVG write now draws like an SVG figure in a reply
+- Write-tool previews now render as files stream: SVG files appear as images, and Mermaid files (`.mmd` and `.mermaid`) appear as diagrams. Tern also previews supported 3D model formats (`.obj`, `.ply`, `.wrl`, `.x3dv`, `.stl`, `.gltf`, and `.usda`) and renders SVG writes as SVG figures.
+- Added the `title.icons` setting to show session title cards with a Nerd Font glyph and emoji fallback (`nf+emoji`, default), always the emoji (`emoji`), or as plain titles (`boring`).
+- Added the `title.generator` setting to name sessions from a fork of the reply (`fork`, default) or with the title model only (`tiny`).
 
 ### Changed
 
-- Inside a Tern pane, browser opens with `headed: false` now show as a Tern picture-in-picture too; only `app.tern: false` (or `browser.tern` / `PI_BROWSER_TERN=0`) opens Chromium instead
-- Inside a Tern pane, `/fork` opens the fork in a new pane beside the original, which keeps the original session
-- Roughly halved browser `extract` time in text mode on large pages ([#14668](https://github.com/can1357/oh-my-pi/pull/14668) by [@H4vC](https://github.com/H4vC))
-- Reduced per-turn session branch copying on long sessions ([#14677](https://github.com/can1357/oh-my-pi/pull/14677) by [@H4vC](https://github.com/H4vC))
-- Sped up bash startup; direnv reuses its verified environment for 5 s when nothing changed ([#14680](https://github.com/can1357/oh-my-pi/pull/14680) by [@H4vC](https://github.com/H4vC))
-- Prompt history search (Ctrl+R) now updates results 100 ms after you stop typing instead of on every keystroke; Enter and clicks always act on the current query's results ([#14687](https://github.com/can1357/oh-my-pi/pull/14687) by [@H4vC](https://github.com/H4vC))
-- Sped up agent hub activity rows ([#14688](https://github.com/can1357/oh-my-pi/pull/14688) by [@H4vC](https://github.com/H4vC))
-- Sped up `local://`, `history://` and `artifact://` autocomplete by reusing directory scans for 2 s, so a just-created file can take up to 2 s to appear ([#14692](https://github.com/can1357/oh-my-pi/pull/14692) by [@H4vC](https://github.com/H4vC))
-- Removed quadratic slowdown of TTSR stream rules on long responses ([#14693](https://github.com/can1357/oh-my-pi/pull/14693) by [@H4vC](https://github.com/H4vC))
-- Reduced per-prompt session overhead from pruning, goal-mode token accounting, branch appends, publishing and full session rewrites ([#14694](https://github.com/can1357/oh-my-pi/pull/14694) by [@H4vC](https://github.com/H4vC))
-- Reduced per-event session overhead: no branch copies for persisted-message checks, and extension hooks without handlers are skipped before building their context ([#14695](https://github.com/can1357/oh-my-pi/pull/14695) by [@H4vC](https://github.com/H4vC))
-- Reduced edit and `write` CPU on large files ([#14700](https://github.com/can1357/oh-my-pi/pull/14700) by [@H4vC](https://github.com/H4vC))
-- Sped up `read` on large files (`:-N` tails ~8× faster on 50 MB), repeated archive reads, SQLite last pages and speculative reads ([#14701](https://github.com/can1357/oh-my-pi/pull/14701) by [@H4vC](https://github.com/H4vC))
-- Sped up `grep` and `glob` results ([#14702](https://github.com/can1357/oh-my-pi/pull/14702) by [@H4vC](https://github.com/H4vC))
-- Sped up output schema validation by memoizing validators ([#14702](https://github.com/can1357/oh-my-pi/pull/14702) by [@H4vC](https://github.com/H4vC))
-- Reduced eval live-output overhead (~7× less on 100k-line cells) and sped up terminal graphics extraction (~5×) ([#14704](https://github.com/can1357/oh-my-pi/pull/14704) by [@H4vC](https://github.com/H4vC))
-- A backpressured `omp stream` viewer that catches up now gets the current screen redacted with the latest secret patterns ([#14705](https://github.com/can1357/oh-my-pi/pull/14705) by [@H4vC](https://github.com/H4vC))
-- Fetching URLs on hosts that are not Mastodon, Lemmy or Discourse no longer re-probes those platforms on every request; a host found not to run one is skipped for 10 minutes ([#14707](https://github.com/can1357/oh-my-pi/pull/14707) by [@H4vC](https://github.com/H4vC))
-- Sped up fetching Hacker News, GitHub, NuGet, docs.rs, Mastodon/Lemmy/Discourse and binary (PDF/document) URLs ([#14708](https://github.com/can1357/oh-my-pi/pull/14708) by [@H4vC](https://github.com/H4vC))
-- Sped up Perplexity OAuth search streaming ([#14708](https://github.com/can1357/oh-my-pi/pull/14708) by [@H4vC](https://github.com/H4vC))
-- Sped up DOCX, PPTX, XLSX and EPUB conversion and cut its memory use on media-heavy documents ([#14709](https://github.com/can1357/oh-my-pi/pull/14709) by [@H4vC](https://github.com/H4vC))
-- Reduced LSP traffic: `didSave` includes the file text only for servers that request it, on both saves and refreshes ([#14710](https://github.com/can1357/oh-my-pi/pull/14710) by [@H4vC](https://github.com/H4vC))
-- Sped up LSP/DAP message framing ([#14710](https://github.com/can1357/oh-my-pi/pull/14710) by [@H4vC](https://github.com/H4vC))
-- Reduced MCP refreshes by coalescing bursts of tool-set change notifications and `tools/list` refreshes ([#14711](https://github.com/can1357/oh-my-pi/pull/14711) by [@H4vC](https://github.com/H4vC))
-- Sped up repeated LLM requests with inline images and blob uploads ([#14712](https://github.com/can1357/oh-my-pi/pull/14712) by [@H4vC](https://github.com/H4vC))
-- Sped up concurrent subagent launches by sharing one agent discovery scan ([#14713](https://github.com/can1357/oh-my-pi/pull/14713) by [@H4vC](https://github.com/H4vC))
-- Sped up ssh:// file operations by reusing verified connections for 30 s ([#14713](https://github.com/can1357/oh-my-pi/pull/14713) by [@H4vC](https://github.com/H4vC))
-- Reduced collab host overhead: nothing is mirrored while no guest is joined, and frames and guest joins serialize once ([#14714](https://github.com/can1357/oh-my-pi/pull/14714) by [@H4vC](https://github.com/H4vC))
-- Reduced per-turn advisor work: advisor deltas are rendered only when a single-block fallback or requeue needs them ([#14717](https://github.com/can1357/oh-my-pi/pull/14717) by [@H4vC](https://github.com/H4vC))
-- Reduced memory use of local memory extraction and `run_experiment` on large inputs ([#14718](https://github.com/can1357/oh-my-pi/pull/14718) by [@H4vC](https://github.com/H4vC))
-- Sped up Mnemopi session start ([#14718](https://github.com/can1357/oh-my-pi/pull/14718) by [@H4vC](https://github.com/H4vC))
-- Reduced CPU during live voice calls and dictation by avoiding per-frame audio buffer copies ([#14719](https://github.com/can1357/oh-my-pi/pull/14719) by [@H4vC](https://github.com/H4vC))
-- Reduced RPC `message_update` encoding CPU for streaming messages with many small content blocks, and stopped re-sending unchanged live audio level updates ([#14716](https://github.com/can1357/oh-my-pi/pull/14716) by [@H4vC](https://github.com/H4vC))
-- Fixed multi-second freezes after large pastes with unclosed tags in title/auto-thinking preprocessing ([#14720](https://github.com/can1357/oh-my-pi/pull/14720) by [@H4vC](https://github.com/H4vC))
-- Sped up image resizing up to ~2.6× by decoding the source once ([#14720](https://github.com/can1357/oh-my-pi/pull/14720) by [@H4vC](https://github.com/H4vC))
-- Stopped text prediction from touching the filesystem on every keystroke while SmolLM weights download ([#14720](https://github.com/can1357/oh-my-pi/pull/14720) by [@H4vC](https://github.com/H4vC))
-- Reduced CPU during live voice calls and dictation by avoiding per-frame audio buffer copies ([#14719](https://github.com/can1357/oh-my-pi/pull/14719) by [@H4vC](https://github.com/H4vC))
+- Session titles are generated using the session's model when possible, with a fallback to the lightweight title model; `TITLE_SYSTEM.md` continues to override the title prompt.
+- Session titles now include a card index, icon, and short code, with appropriate Nerd Font rendering in Tern panes.
+- When Nerd Font symbols are unavailable, session titling requests only an emoji.
+- Subagent completion indicators now advance to 99% when the subagent submits its result.
+- In Tern panes, headed and headless browser opens are shown in Tern picture-in-picture by default; set `app.tern: false`, `browser.tern`, or `PI_BROWSER_TERN=0` to open Chromium instead.
+- In Tern panes, `/fork` opens the fork in a neighboring pane while preserving the original session.
+- Tern's empty composer now shows the session title, or “What are we cooking?” when no title is available.
+- Tern todo cards now display their checklist by default and can be collapsed by clicking the card header.
+- Improved performance across browser extraction, web and document fetching, file tools, search, session handling, LSP/DAP, MCP, subagents, SSH file operations, image processing, voice and dictation, collaboration, and large-output or large-file workflows.
+- Prompt history search now updates shortly after typing stops while Enter and mouse selections use the latest query.
+- Improved responsiveness and reduced resource usage for long sessions, large files and documents, streaming evaluations, terminal graphics, live voice calls, and other high-volume workflows.
+- Hosts that are not supported Mastodon, Lemmy, or Discourse instances are no longer repeatedly probed for those services, improving URL-fetch performance.
+
 ### Fixed
 
+- Fixed a message sent while an earlier title request was still running never getting its own try at naming the session when that request came back empty.
+- Fixed `/new` incorrectly carrying plan mode, its plan-specific model, or goal mode into the new session.
+- Fixed todo lists failing to auto-clear while subagents streamed progress.
+- Fixed memory growth during ACP client-terminal commands.
+- Fixed freezes after large pastes containing unclosed tags.
+- Fixed slowdowns when processing long evaluation output, large Python kernel results, compiler/linter output, and ephemeral side-channel replies.
+- Fixed documents served as `application/octet-stream` being downloaded twice.
+- Fixed collaboration guests rebuilding the transcript excessively during streaming.
+- Fixed misspelled `compat` keys in `models.yml` being accepted silently: each key that neither the file schema nor the runtime compatibility vocabulary recognizes now produces one warning naming the file and key path (a startup notification, or stderr in print and RPC modes and `omp models`), and the configuration still loads ([#14737](https://github.com/can1357/oh-my-pi/pull/14737) by [@alphastorm](https://github.com/alphastorm))
 - Fixed `/new` keeping plan mode (and its plan-role model) or goal mode active in the new session ([#14653](https://github.com/can1357/oh-my-pi/issues/14653))
 - Fixed parallel first bash calls each spawning an rc-sourcing shell ([#14680](https://github.com/can1357/oh-my-pi/pull/14680) by [@H4vC](https://github.com/H4vC))
 - Fixed the todo list's auto-clear never firing while subagents were streaming progress ([#14692](https://github.com/can1357/oh-my-pi/pull/14692) by [@H4vC](https://github.com/H4vC))
@@ -109,6 +98,32 @@
 - Fixed `--resume <path>` silently creating a new session when the specified path did not exist; it now reports the missing path.
 - Fixed `/settings` opening duplicate menus when invoked while the settings menu was already open.
 - Fixed native Git operations resolving repositories incorrectly when run through symbolic links.
+- Fixed Cursor's local tool bridge bypassing normal argument validation, including native shell streaming; eval also rejects unsupported languages and missing code at its own input boundary ([#14624](https://github.com/can1357/oh-my-pi/pull/14624) by [@alphastorm](https://github.com/alphastorm))
+- Fixed JSON query parsing to correctly handle filters starting with hyphens
+- Fixed unreliable query parameter decoding in JSON read paths
+- `/new` starts a fresh configured prewalk cycle after a handoff or cancellation, resets the todo gate, and restores the planning model after automatic recovery when no explicit selection supersedes the handoff ([#14587](https://github.com/can1357/oh-my-pi/pull/14587) by [@NaC-L](https://github.com/NaC-L)).
+- Fixed `/logout` for an alias login such as `openai-codex-device` reporting no stored credentials; it now lists and removes the accounts stored under the provider it logs in to ([#14588](https://github.com/can1357/oh-my-pi/pull/14588) by [@andrebrait](https://github.com/andrebrait))
+- Fixed logging in through an alias login such as `openai-codex-device` (`/login` or RPC `login`) not refreshing the logged-in provider's models, and RPC `get_login_providers` reporting alias logins as unauthenticated ([#14588](https://github.com/can1357/oh-my-pi/pull/14588) by [@andrebrait](https://github.com/andrebrait))
+- Fixed model speed aggregates blending an OpenAI or Codex fast service tier's throughput into the standard average; turns served on a non-default tier keep their own row, and `/models` shows that tier's numbers, labeled, for the tier the live session would send ([#14471](https://github.com/can1357/oh-my-pi/pull/14471) by [@eggpeat](https://github.com/eggpeat)).
+- Released obsolete model catalogs after refreshes and provider changes without waiting for the model picker to reopen ([#14317](https://github.com/can1357/oh-my-pi/pull/14317) by [@iliaal](https://github.com/iliaal)).
+- Fixed the `write` tool freezing the whole TUI on a FIFO or terminal target (directly or through a symlink) and hanging on an `x.db:table` path whose database is a FIFO; targets that are neither regular files nor directories, including `/dev/null`, are now rejected ([#14452](https://github.com/can1357/oh-my-pi/pull/14452) by [@DrFaustus-vic](https://github.com/DrFaustus-vic)).
+- Fixed the `edit` tool hanging on a FIFO or terminal, or exhausting memory on `/dev/zero`; targets that are neither regular files nor directories, including `/dev/null`, are now rejected in every edit mode ([#14462](https://github.com/can1357/oh-my-pi/pull/14462) by [@DrFaustus-vic](https://github.com/DrFaustus-vic)).
+- Fixed long conversations silently losing screenshots and other images the model was still meant to see: images the assistant itself generated no longer counted against the provider's per-request image cap, which had made the clamp evict real user and tool-result images to make room for them ([#14390](https://github.com/can1357/oh-my-pi/pull/14390) by [@F0Rextasy](https://github.com/F0Rextasy)).
+- Fixed the `local://` fallback root escaping to the temp directory or the shared `omp-local` directory when a session id is `.` or `..` ([#14385](https://github.com/can1357/oh-my-pi/pull/14385) by [@jaredlyon](https://github.com/jaredlyon))
+- Fixed `omp gc --archive --apply` leaving one orphan `session_titles` row per archived session behind in `history.db` ([#13930](https://github.com/can1357/oh-my-pi/issues/13930), [#14358](https://github.com/can1357/oh-my-pi/pull/14358) by [@F0Rextasy](https://github.com/F0Rextasy))
+- Fixed `/retry` reporting "Nothing to retry" after a process exit interrupted a reopened `ask` picker when an extension registered a `context` handler ([#14188](https://github.com/can1357/oh-my-pi/pull/14188) by [@schickling-assistant](https://github.com/schickling-assistant)).
+- Fixed browser runs through the relay not seeing cross-origin iframes that had loaded before the tab was opened, so `tab.observe()` listed none of their controls and their content could not be read or clicked ([#14422](https://github.com/can1357/oh-my-pi/pull/14422) by [@will-bogusz](https://github.com/will-bogusz))
+- Fixed browser clicks on Chromium tabs timing out on radios and checkboxes whose real input is invisible (`opacity:0`) under the control the page draws, as on GOV.UK forms ([#14555](https://github.com/can1357/oh-my-pi/pull/14555) by [@will-bogusz](https://github.com/will-bogusz))
+- Fixed `/model` leaving the session on its current model when you pick the model a project's `modelRoles.default` already names; it reported "role cleared" instead of switching ([#14382](https://github.com/can1357/oh-my-pi/pull/14382) by [@jshield](https://github.com/jshield))
+- Fixed `wait` being cut short by a queued background completion that had already been consumed elsewhere, such as by an eval cell awaiting its subagent, which left no message to follow. Such a consumed result also no longer counts as pending background work when the session decides whether it is idle ([#14257](https://github.com/can1357/oh-my-pi/pull/14257) by [@nick-maderight](https://github.com/nick-maderight))
+- Symlinked routing configs now reload when an intermediate file or profile directory link is replaced, and continue following edits to the new target without restarting the session ([#14192](https://github.com/can1357/oh-my-pi/pull/14192) by [@schickling-assistant](https://github.com/schickling-assistant)).
+- Fixed repeated coding-plan fallback confirmations after choosing No when thinking changes, quota data is unavailable, or only another account recovers ([#14475](https://github.com/can1357/oh-my-pi/pull/14475) by [@lemonleks](https://github.com/lemonleks)).
+- Fixed Python eval failing with EACCES when another user created the shared runner temp dir ([#14449](https://github.com/can1357/oh-my-pi/pull/14449) by [@TheRockPusher](https://github.com/TheRockPusher))
+- Fixed multi-select questions in a multi-question `ask` having no way to continue in RPC clients: the `Done selecting` row now appears there too, instead of relying on the TUI-only right-arrow key ([#14253](https://github.com/can1357/oh-my-pi/pull/14253) by [@ataberkus](https://github.com/ataberkus))
+- Fixed tool descriptions that misdescribed runtime behaviour: a single non-raw `read` range adds 1 line before and 3 after and only `:raw` is exact, non-`pty` `bash` calls move to the background after 60 s by default, eval Python is not IPython (no `get_ipython()`), the replace edit prompt suggested the uninstalled `sd` instead of the built-in `sed`, and `goal` `drop` removes the goal tool so a new goal can't be created afterwards ([#13998](https://github.com/can1357/oh-my-pi/pull/13998) by [@radkawar](https://github.com/radkawar))
+- Fixed the `advisor.immuneTurns` setting description claiming blockers are suppressed during the cooldown; blockers are exempt from it ([#10493](https://github.com/can1357/oh-my-pi/issues/10493), [#14360](https://github.com/can1357/oh-my-pi/pull/14360) by [@F0Rextasy](https://github.com/F0Rextasy))
+- Fixed custom `GlobOperations` backends hanging a `glob` call forever: the call now stops at the tool's scan deadline and reports the scan as incomplete, and the backend receives the resolved hidden/gitignore/limit policy plus a cancellation signal ([#6370](https://github.com/can1357/oh-my-pi/issues/6370), [#14426](https://github.com/can1357/oh-my-pi/pull/14426) by [@F0Rextasy](https://github.com/F0Rextasy))
+- Fixed `--resume <path>` silently creating a brand new session when the path did not exist; it now fails with a message naming the path, matching `--fork <path>` and `--resume <id>` ([#14404](https://github.com/can1357/oh-my-pi/pull/14404) by [@F0Rextasy](https://github.com/F0Rextasy))
 
 ## [18.6.3] - 2026-10-06
 
